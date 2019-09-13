@@ -10,9 +10,14 @@ public class KafkaRestController {
     @Autowired
     private KafkaService kafkaService;
 
-    @PostMapping
+    @PostMapping("/sendMessage")
     public void sendMessage(String message){
         kafkaService.sendMessage(message);
+    }
+
+    @PostMapping("/sendProtobufMessage")
+    public void sendProtobufMessage(TestProto.test  test){
+        kafkaService.sendProtocMessage(test);
     }
 
 }

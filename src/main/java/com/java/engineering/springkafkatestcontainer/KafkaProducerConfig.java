@@ -20,6 +20,15 @@ public class KafkaProducerConfig {
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(getConfigProperties());
+    }
+
+    @Bean
+    public ProducerFactory<String, TestProto.test> producerFactoryForProto() {
+        return new DefaultKafkaProducerFactory<>(getConfigProperties());
+    }
+
+    private Map<String, Object> getConfigProperties() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -30,11 +39,17 @@ public class KafkaProducerConfig {
         configProps.put(
             ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
             StringSerializer.class);
-        return new DefaultKafkaProducerFactory<>(configProps);
+
+        return configProps;
     }
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
+    }
+
+    @Bean
+    public KafkaTemplate<String, TestProto.test> kafkaTemplate1() {
+        return new KafkaTemplate<>(producerFactoryForProto());
     }
 }

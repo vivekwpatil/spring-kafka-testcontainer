@@ -42,7 +42,10 @@ public class KafkaServiceTest {
 
     @Test
     public void whenKafkaIsCalled_testcontainerKafka_used() throws InterruptedException {
-        kafkaService.sendMessage("Hello World");
+        kafkaService.sendMessage("Hello World String format");
+
+        TestProto.test test=  TestProto.test.newBuilder().setMessage("Hello Java Engineers using protobuf").build();
+        kafkaService.sendProtocMessage(test);
         sleep(10000);
         /*Unreliables.retryUntilTrue(10, TimeUnit.SECONDS, () -> {
             ConsumerRecords<String, String> records = createConsumer().poll(100);
